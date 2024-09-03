@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d690918d240e85a468fae4e7f5e9acab, type: 3}
+  m_Name: PlayerRifleWeaponAttackType
+  m_EditorClassIdentifier: 
+  attackDetails:
+  - rid: 4173340835575234560
+  - rid: 4173340835575234561
+  references:
+    version: 2
+    RefIds:
+    - rid: 4173340835575234560
+      type: {class: WeaponAttackTypeSO/AttackCount, ns: , asm: Assembly-CSharp}
+      data:
+        attackDetailType: 1
+        count: 1
+    - rid: 4173340835575234561
+      type: {class: WeaponAttackTypeSO/DelayTime, ns: , asm: Assembly-CSharp}
+      data:
+        attackDetailType: 0
+        delayMilliSecond: 500
