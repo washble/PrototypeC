@@ -12,17 +12,12 @@ public class PlayerMoveController : Singleton<PlayerMoveController>
 
     internal PlayerWeaponController playerWeaponController;
     internal NavMeshAgent navMeshAgent;
-    private Transform thisTransform;
     internal Vector2 direction = Vector2.zero;
 
-    internal PlayerState playerState { get; set; } = PlayerState.Idle;
+    internal PlayerState playerState = PlayerState.Idle;
 
     [Header("[Move]")]
     [SerializeField] internal float lookAtSpeed = 15f;
-
-    internal RaycastHit[] enemyRaycastHit;
-    internal int hitEnemyCount;
-    private LayerMask enemyLayerMask;
 
     private IMove curMove;
     private IMove moveIdle;
@@ -50,30 +45,28 @@ public class PlayerMoveController : Singleton<PlayerMoveController>
 
     private void OnEnable()
     {
-        inputManager.OnMoveInput += InputMove;
+        inputManager.OnMovePerformedInput += InputMovePerformed;
         inputManager.OnMoveCanceledInput += InputMoveCanceled;
-        inputManager.OnAttackInput += InputAttack;
+        inputManager.OnRunPerformedInput += InputRunPerformed;
+        inputManager.OnAttackPerformedInput += InputAttackPerformed;
     }
 
     private void OnDisable()
     {
-        inputManager.OnMoveInput -= InputMove;
+        inputManager.OnMovePerformedInput -= InputMovePerformed;
         inputManager.OnMoveCanceledInput -= InputMoveCanceled;
-        inputManager.OnAttackInput -= InputAttack;
+        inputManager.OnRunPerformedInput -= InputRunPerformed;
+        inputManager.OnAttackPerformedInput -= InputAttackPerformed;
     }
-    
+
     private void Start()
     {
-        thisTransform = transform;
-        
         MoveSettings();
-        AttackSettings();
     }
     
     private void Update()
     {
         curMove.Move();
-        CheckAttackRadiusEnemy();
     }
 
     private void MoveSettings()
@@ -85,22 +78,16 @@ public class PlayerMoveController : Singleton<PlayerMoveController>
 
         StateInit();
     }
-
-    private void AttackSettings()
-    {
-        enemyRaycastHit = new RaycastHit[enemySpawner.Enemies.Length];
-        
-        enemyLayerMask = LayerMask.GetMask(GameObjectLayer.Enemy.ToString());
-    }
     
     private void StateInit()
     {
         direction = Vector2.zero;
+        (moveRun as PlayerMoveRun)!.StopSpeedRunning();
         
         curMove = moveIdle;
     }
     
-    private void InputMove(Vector2 position, float time)
+    private void InputMovePerformed(Vector2 position, float time)
     {
         direction = position;
         curMove = moveRun;
@@ -110,10 +97,18 @@ public class PlayerMoveController : Singleton<PlayerMoveController>
     {
         StateInit();
     }
-
-    private void InputAttack(bool attack, float time)
+  
+    private void InputRunPerformed(float run, float time)
     {
-        if(!attack) { return; }
+        if(run < 1) { return; }
+
+        (moveRun as PlayerMoveRun)!.StartSpeedRunning();
+    }
+
+
+    private void InputAttackPerformed(float attack, float time)
+    {
+        if(attack < 1) { return; }
         
         curMove = moveAttack;
     }
@@ -121,21 +116,6 @@ public class PlayerMoveController : Singleton<PlayerMoveController>
     internal void AttackEnd()
     {
         StateInit();
-    }
-    
-    private void CheckAttackRadiusEnemy()
-    {
-        if(curMove != moveIdle) return;
-        
-        hitEnemyCount = Physics.SphereCastNonAlloc(
-            thisTransform.position, playerWeaponController.attackDistance, 
-            thisTransform.forward, 
-            enemyRaycastHit, 0, enemyLayerMask, QueryTriggerInteraction.Collide);
-        
-        if (hitEnemyCount > 0)
-        {
-            curMove = moveAttack;  
-        }
     }
     
 #if UNITY_EDITOR

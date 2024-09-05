@@ -34,6 +34,7 @@ public enum GameObjectTag
 
 public enum WeaponType
 {
+    PlayerSword,
     PlayerRifleBullet,
     GunslingerBullet,
 }

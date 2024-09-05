@@ -6,9 +6,9 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] private Weapon weapon;
     internal Weapon Weapon => weapon;
 
-    [field:Header("[State]")]
-    [field:SerializeField] public float speed { get; set; } = 3;
-    [field:SerializeField] public float shield { get; set; } = 5;
-    [field:SerializeField] public float damage { get; set; } = 5;
-    [field:SerializeField] public float attackDistance { get; set; } = 10;
+    [Header("[State]")]
+    [SerializeField] public float speed  = 3;
+    [SerializeField] public float shield = 5;
+    [SerializeField] public float damage = 5;
+    [SerializeField] public float attackDistance = 10;
 }

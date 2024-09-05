@@ -26,49 +26,10 @@ public class PlayerMoveAttack : IMove
     
     public void Move()
     {
-        int reAttackDelayMilliSecond = 0;
-        if (IsRetarget())
-        {
-            selectTargetTransform = SelectTarget();
-            reAttackDelayMilliSecond = 250;
-        }
-        LookAtTarget(selectTargetTransform);
-        
         playerMoveController.playerState = PlayerState.Attack;
         MoveAnimation();
-        playerWeaponController.Weapon.AttackStart(reAttackDelayMilliSecond);
+        playerWeaponController.Weapon.AttackStart(0);
         playerMoveController.AttackEnd();
-    }
-
-    private bool IsRetarget()
-    {
-        return playerMoveController.playerState != PlayerState.Attack
-               || !selectTargetTransform.gameObject.activeInHierarchy;
-    }
-
-    private Transform SelectTarget()
-    {
-        RaycastHit[] raycastHits = playerMoveController.enemyRaycastHit;
-        int hitEnemyCount = playerMoveController.hitEnemyCount;
-        Vector3 thisPosition = thisTransform.position;
-
-        Transform targetTransform = null;
-        float preSqrMagnitude = int.MaxValue;
-        for (int i = 0; i < hitEnemyCount; i++)
-        {
-            RaycastHit curRaycastHit = raycastHits[i];
-            Transform curTargetTransform = curRaycastHit.transform;
-            Vector3 curDirection = curTargetTransform.position - thisPosition;
-
-            float curSqrMagnitude = curDirection.sqrMagnitude; 
-            if (curSqrMagnitude < preSqrMagnitude)
-            {
-                preSqrMagnitude = curSqrMagnitude;
-                targetTransform = curTargetTransform;
-            }
-        }
-
-        return targetTransform;
     }
 
     private void LookAtTarget(Transform targetTransform)

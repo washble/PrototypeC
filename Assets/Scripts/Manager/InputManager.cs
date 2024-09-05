@@ -6,14 +6,20 @@ public class InputManager : Singleton<InputManager>
 {
 #region Events
 
-    public delegate void MoveInput(Vector2 position, float time);
-    public event MoveInput OnMoveInput;
+    public delegate void MovePerformedInput(Vector2 position, float time);
+    public event MovePerformedInput OnMovePerformedInput;
     
     public delegate void MoveCanceledInput(Vector2 position, float time);
     public event MoveCanceledInput OnMoveCanceledInput;
     
-    public delegate void AttackInput(bool attack, float time);
-    public event AttackInput OnAttackInput;
+    public delegate void RunPerformedInput(float run, float time);
+    public event RunPerformedInput OnRunPerformedInput;
+    
+    public delegate void RundCanceledInput(float run, float time);
+    public event RundCanceledInput OnRundCanceledInput;
+    
+    public delegate void AttackPerformedInput(float attack, float time);
+    public event AttackPerformedInput OnAttackPerformedInput;
     
 #endregion
 
@@ -40,14 +46,15 @@ public class InputManager : Singleton<InputManager>
     {
         playerAction.Player.Move.performed += PerformedMove;
         playerAction.Player.Move.canceled += CanceledMove;
+        playerAction.Player.Run.performed += PerformedRun;
         playerAction.Player.Attack.performed += PerformedAttack;
     }
 
     private void PerformedMove(InputAction.CallbackContext context)
     {
-        if (OnMoveInput is not null)
+        if (OnMovePerformedInput is not null)
         {
-            OnMoveInput(playerAction.Player.Move.ReadValue<Vector2>(), (float)context.time);
+            OnMovePerformedInput(playerAction.Player.Move.ReadValue<Vector2>(), (float)context.time);
         }
     }
     
@@ -59,11 +66,19 @@ public class InputManager : Singleton<InputManager>
         }
     }
     
+    private void PerformedRun(InputAction.CallbackContext context)
+    {
+        if (OnRunPerformedInput is not null)
+        {
+            OnRunPerformedInput(playerAction.Player.Run.ReadValue<float>(), (float)context.time);
+        }
+    }
+    
     private void PerformedAttack(InputAction.CallbackContext context)
     {
-        if (OnAttackInput is not null)
+        if (OnAttackPerformedInput is not null)
         {
-            OnAttackInput(playerAction.Player.Attack.ReadValue<bool>(), (float)context.time);
+            OnAttackPerformedInput(playerAction.Player.Attack.ReadValue<float>(), (float)context.time);
         }
     }
 }

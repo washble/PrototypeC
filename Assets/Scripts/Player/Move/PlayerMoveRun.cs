@@ -7,6 +7,8 @@ public class PlayerMoveRun : IMove
     private readonly PlayerAnimationController playerAnimationController;
     private readonly NavMeshAgent navMeshAgent;
 
+    private bool isSpeedRunning = false;
+
     public PlayerMoveRun(PlayerMoveController playerMoveController)
     {
         this.playerMoveController = playerMoveController;
@@ -35,6 +37,21 @@ public class PlayerMoveRun : IMove
         MoveAnimation();
     }
 
+    public void StartSpeedRunning()
+    {
+        if(isSpeedRunning) { return; }
+
+        isSpeedRunning = true;
+        navMeshAgent.speed += playerMoveController.playerWeaponController.speed;
+    }
+
+    public void StopSpeedRunning()
+    {
+        if(!isSpeedRunning) { return; }
+
+        isSpeedRunning = false;
+        navMeshAgent.speed -= playerMoveController.playerWeaponController.speed;
+    }
 
     private void MoveAnimation()
     {
