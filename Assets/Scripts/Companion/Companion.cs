@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 [DisallowMultipleComponent]
-[RequireComponent(typeof(NavMeshAgent), typeof(Collider))]
-public abstract class Enemy : MonoBehaviour
+[RequireComponent(typeof(NavMeshAgent))]
+public abstract class Companion : MonoBehaviour
 {
     /**
      * TODO Move the state storage to the ScriptableObject
@@ -14,35 +16,32 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] private float health = 30;
     [SerializeField] private float shield = 5;
     [SerializeField] private float damage = 5;
-    [SerializeField] private float attackDistance = 10;
+    [SerializeField] private float attackDistance = 5;
     [SerializeField] private float lookAtSpeed = 2f;
     
     [Header("[Weapon]")]
     [SerializeField] private Weapon weapon;
-    internal Weapon Eweapon => weapon;
-
+    
     // =========== Component =========== //
-    protected EnemyMove CurMove;
+    protected CompanionMove CurMove;
     
     private Transform target;
-    protected Transform ETarget => target;
+    protected Transform CTarget => target;
     
     private Animator animator;
-    protected Animator EAnimator => animator;
+    protected Animator CAnimator => animator;
 
     private NavMeshAgent navMeshAgent;
-    protected NavMeshAgent ENavMeshAgent => navMeshAgent;
+    protected NavMeshAgent CNavMeshAgent => navMeshAgent;
 
-    internal EnemyState EState;
-    
+    internal CompanionState CState;
+        
     protected virtual void Awake()
     {
-        target = GameManager.Instance.Player.transform;
-        
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
     }
-
+    
     protected virtual void Start()
     {
         NavMeshInitSettings();
@@ -50,19 +49,19 @@ public abstract class Enemy : MonoBehaviour
 
         //WeaponInitSettings();
     }
-
+    
     protected virtual void Update()
     {
         CurMove.Move();
     }
-
+    
     private void NavMeshInitSettings()
     {
         navMeshAgent.speed = speed;
         navMeshAgent.autoBraking = false;
         navMeshAgent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
     }
-
+        
     private void WeaponInitSettings()
     {
         if (!weapon) { return; }
@@ -106,7 +105,7 @@ public abstract class Enemy : MonoBehaviour
         Vector3 thisPosition = transform.position;
         Vector3 direction = target.position - thisPosition;
         Vector3 scaledMovement = navMeshAgent.speed * Time.deltaTime
-                                * new Vector3(direction.x, 0, direction.z);
+                                                    * new Vector3(direction.x, 0, direction.z);
         Quaternion targetRotation = Quaternion.LookRotation(scaledMovement, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Mathf.Clamp01(Time.deltaTime * lookAtSpeed));
     }
@@ -122,7 +121,7 @@ public abstract class Enemy : MonoBehaviour
     }
 }
 
-public enum EnemyState
+public enum CompanionState
 {
     Idle,
     Attack,

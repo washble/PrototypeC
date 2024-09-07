@@ -1,15 +1,15 @@
 
 
-public class GunslingerEnemyMoveDie : IEnemyMove
+public class GunslingerEnemyMoveDie : EnemyMove
 {
     private GunslingerEnemy enemy;
-
-    public void SetEnemy(Enemy enemy)
+    
+    public GunslingerEnemyMoveDie(Enemy enemy) : base(enemy)
     {
         this.enemy = enemy as GunslingerEnemy;
     }
-    
-    public void Move()
+
+    public override void Move()
     {
         Die();
     }

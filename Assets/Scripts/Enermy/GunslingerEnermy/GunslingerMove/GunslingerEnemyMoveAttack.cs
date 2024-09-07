@@ -1,21 +1,21 @@
 
 
-public class GunslingerEnemyMoveAttack : IEnemyMove
+public class GunslingerEnemyMoveAttack : EnemyMove
 {
     private GunslingerEnemy enemy;
-
-    public void SetEnemy(Enemy enemy)
+    
+    public GunslingerEnemyMoveAttack(Enemy enemy) : base(enemy)
     {
         this.enemy = enemy as GunslingerEnemy;
     }
     
-    public void Move()
+    public override void Move()
     {
         if (!enemy.CanAttackTarget())
         {
             enemy.MoveStartToTarget();
             enemy.EState = EnemyState.Move;
-            enemy.curMove = enemy.moveRun;
+            enemy.ChangeCureMove(enemy.moveRun);
             return;
         }
         

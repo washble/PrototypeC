@@ -1,18 +1,18 @@
 
 
-public class GunslingerEnemyMoveIdle : IEnemyMove
+public class GunslingerEnemyMoveIdle : EnemyMove
 {
     private GunslingerEnemy enemy;
-
-    public void SetEnemy(Enemy enemy)
+    
+    public GunslingerEnemyMoveIdle(Enemy enemy) : base(enemy)
     {
         this.enemy = enemy as GunslingerEnemy;
     }
-
-    public void Move()
+    
+    public override void Move()
     {
         enemy.MoveStartToTarget();
         enemy.EState = EnemyState.Move;
-        enemy.curMove = enemy.moveRun;
+        enemy.ChangeCureMove(enemy.moveRun);
     }
 }

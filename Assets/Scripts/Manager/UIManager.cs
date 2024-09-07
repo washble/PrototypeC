@@ -10,10 +10,10 @@ public class UIManager : Singleton<UIManager>
 
     private Vector2[] buttonUIArea;
 
-    private void Start()
-    {
-        //CalButtonUIAreaPositions();
-    }
+    // private void Start()
+    // {
+    //     CalButtonUIAreaPositions();
+    // }
 
     private void CalButtonUIAreaPositions()
     {

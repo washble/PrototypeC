@@ -1,15 +1,15 @@
 
 
-public class GunslingerEnemyMoveDamaged : IEnemyMove
+public class GunslingerEnemyMoveDamaged : EnemyMove
 {
     private GunslingerEnemy enemy;
-
-    public void SetEnemy(Enemy enemy)
+    
+    public GunslingerEnemyMoveDamaged(Enemy enemy) : base(enemy)
     {
         this.enemy = enemy as GunslingerEnemy;
     }
-    
-    public void Move()
+
+    public override void Move()
     {
         PlayerWeaponController pwc = GameManager.Instance.PlayerWeaponController;
         float remainHealth = enemy.Damaged(pwc.damage);

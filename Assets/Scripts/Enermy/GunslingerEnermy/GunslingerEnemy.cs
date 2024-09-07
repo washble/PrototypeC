@@ -1,16 +1,16 @@
+using System;
 using UnityEngine;
 
 public class GunslingerEnemy : Enemy
 {
     [SerializeField] private Transform weaponGrabTransform;
     
-    internal IEnemyMove curMove;
-    internal IEnemyMove moveIdle;
-    internal IEnemyMove moveRun;
-    internal IEnemyMove moveDash;
-    internal IEnemyMove moveAttack;
-    internal IEnemyMove moveDamaged;
-    internal IEnemyMove moveDie;
+    internal EnemyMove moveIdle;
+    internal EnemyMove moveRun;
+    internal EnemyMove moveDash;
+    internal EnemyMove moveAttack;
+    internal EnemyMove moveDamaged;
+    internal EnemyMove moveDie;
 
     protected override void Start()
     {
@@ -21,30 +21,24 @@ public class GunslingerEnemy : Enemy
     
     private void EnemyMoveSettings()
     {
-        moveIdle = new GunslingerEnemyMoveIdle();
-        moveIdle.SetEnemy(this);
-        moveRun = new GunslingerEnemyMoveRun();
-        moveRun.SetEnemy(this);
-        moveDash = new GunslingerEnemyMoveDash();
-        moveDash.SetEnemy(this);
-        moveAttack = new GunslingerEnemyMoveAttack();
-        moveAttack.SetEnemy(this);
-        moveDamaged = new GunslingerEnemyMoveDamaged();
-        moveDamaged.SetEnemy(this);
-        moveDie = new GunslingerEnemyMoveDie();
-        moveDie.SetEnemy(this);
+        moveIdle = new GunslingerEnemyMoveIdle(this);
+        moveRun = new GunslingerEnemyMoveRun(this);
+        moveDash = new GunslingerEnemyMoveDash(this);
+        moveAttack = new GunslingerEnemyMoveAttack(this);
+        moveDamaged = new GunslingerEnemyMoveDamaged(this);
+        moveDie = new GunslingerEnemyMoveDie(this);
 
-        curMove = moveIdle;
+        ChangeCureMove(moveIdle);
     }
 
-    private void Update()
+    internal void ChangeCureMove(EnemyMove move)
     {
-        curMove.Move();
+        CurMove = move;
     }
 
     internal void DamagedEnd(float health)
     {
-        curMove = health > 0 ? moveIdle : moveDie;
+        CurMove = health > 0 ? moveIdle : moveDie;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,7 +49,7 @@ public class GunslingerEnemy : Enemy
             case (int)GameObjectLayer.Weapon:
                 if (otherGameObject.CompareTag(GameObjectTag.Player.ToString()))
                 {
-                    curMove = moveDamaged;
+                    CurMove = moveDamaged;
                 }
                 break;
         }

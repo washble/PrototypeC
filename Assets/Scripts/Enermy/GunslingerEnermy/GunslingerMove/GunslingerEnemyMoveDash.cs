@@ -1,15 +1,15 @@
 
 
-public class GunslingerEnemyMoveDash : IEnemyMove
+public class GunslingerEnemyMoveDash : EnemyMove
 {
     private GunslingerEnemy enemy;
-
-    public void SetEnemy(Enemy enemy)
+    
+    public GunslingerEnemyMoveDash(Enemy enemy) : base(enemy)
     {
         this.enemy = enemy as GunslingerEnemy;
     }
-    
-    public void Move()
+
+    public override void Move()
     {
         
     }
