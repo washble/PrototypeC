@@ -13,6 +13,6 @@ public class GunslingerEnemyMoveIdle : EnemyMove
     {
         enemy.MoveStartToTarget();
         enemy.EState = EnemyState.Move;
-        enemy.ChangeCureMove(enemy.moveRun);
+        enemy.ChangeCurMove(enemy.moveRun);
     }
 }

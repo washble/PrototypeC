@@ -13,6 +13,6 @@ public class ShieldCompanionMoveIdle : CompanionMove
     {
         companion.MoveStartToTarget();
         companion.CState = CompanionState.Move;
-        companion.ChangeCureMove(companion.moveRun);
+        companion.ChangeCurMove(companion.moveRun);
     }
 }

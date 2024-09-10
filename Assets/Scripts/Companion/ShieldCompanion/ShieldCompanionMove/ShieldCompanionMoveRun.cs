@@ -14,7 +14,7 @@ public class ShieldCompanionMoveRun : CompanionMove
         {
             companion.MoveStopToTarget();
             companion.CState = CompanionState.Attack;
-            companion.ChangeCureMove(companion.moveAttack);
+            companion.ChangeCurMove(companion.moveAttack);
             return;
         }
         

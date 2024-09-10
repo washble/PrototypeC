@@ -28,10 +28,10 @@ public class GunslingerEnemy : Enemy
         moveDamaged = new GunslingerEnemyMoveDamaged(this);
         moveDie = new GunslingerEnemyMoveDie(this);
 
-        ChangeCureMove(moveIdle);
+        ChangeCurMove(moveIdle);
     }
 
-    internal void ChangeCureMove(EnemyMove move)
+    internal void ChangeCurMove(EnemyMove move)
     {
         CurMove = move;
     }

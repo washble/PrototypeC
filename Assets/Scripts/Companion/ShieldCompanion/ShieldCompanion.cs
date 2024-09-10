@@ -18,6 +18,7 @@ public class ShieldCompanion : Companion
     {
         moveIdle = new ShieldCompanionMoveIdle(this);
         moveRun = new ShieldCompanionMoveRun(this);
+        moveAttack = new ShieldCompanionMoveAttack(this);
 
         InitState();
     }
@@ -27,7 +28,7 @@ public class ShieldCompanion : Companion
         CurMove = moveIdle;
     }
 
-    internal void ChangeCureMove(CompanionMove move)
+    internal void ChangeCurMove(CompanionMove move)
     {
         CurMove = move;
     }

@@ -15,7 +15,7 @@ public class GunslingerEnemyMoveRun : EnemyMove
         {
             enemy.MoveStopToTarget();
             enemy.EState = EnemyState.Attack;
-            enemy.ChangeCureMove(enemy.moveAttack);
+            enemy.ChangeCurMove(enemy.moveAttack);
             return;
         }
         
