@@ -11,7 +11,6 @@ public class ShieldCompanionMoveIdle : CompanionMove
 
     public override void Move()
     {
-        companion.MoveStartToTarget();
         companion.CState = CompanionState.Move;
         companion.ChangeCurMove(companion.moveRun);
     }

@@ -10,6 +10,15 @@ public class ShieldCompanionMoveAttack : CompanionMove
 
     public override void Move()
     {
+        if (!companion.CanAttackTarget())
+        {
+            companion.MoveStartToTarget();
+            companion.CState = CompanionState.Move;
+            companion.ChangeCurMove(companion.moveRun);
+            return;
+        }
         
+        companion.LookAtTarget();
+        companion.Cweapon.AttackStart(0);
     }
 }

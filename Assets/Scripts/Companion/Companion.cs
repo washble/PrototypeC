@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -18,9 +19,14 @@ public abstract class Companion : MonoBehaviour
     [SerializeField] private float damage = 5;
     [SerializeField] private float attackDistance = 5;
     [SerializeField] private float lookAtSpeed = 2f;
+
+    [FormerlySerializedAs("playerDistanceLimit")]
+    [Header("[Companion]")] 
+    [SerializeField] private float distanceLimitFromPlayer;
     
     [Header("[Weapon]")]
     [SerializeField] private Weapon weapon;
+    internal Weapon Cweapon => weapon;
     
     // =========== Component =========== //
     protected CompanionMove CurMove;
@@ -44,15 +50,21 @@ public abstract class Companion : MonoBehaviour
     
     protected virtual void Start()
     {
+        InitSettings();
         NavMeshInitSettings();
         SetDamage(damage);
 
-        //WeaponInitSettings();
+        // WeaponInitSettings();
     }
     
     protected virtual void Update()
     {
         CurMove.Move();
+    }
+
+    private void InitSettings()
+    {
+        ChangeTargetToPlayer();
     }
     
     private void NavMeshInitSettings()
@@ -110,14 +122,35 @@ public abstract class Companion : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Mathf.Clamp01(Time.deltaTime * lookAtSpeed));
     }
 
+    internal void ChangeTargetToPlayer()
+    {
+        target = GameManager.Instance.Player.transform;
+    }
+
+    internal bool CheckFarFromPlayer()
+    {
+        return Vector3SqrMagnitudeLessThan
+            (
+                GameManager.Instance.Player.transform.position,
+                transform.position,
+                distanceLimitFromPlayer
+            );
+    }
+
     internal bool CanAttackTarget()
     {
-        Vector3 offset = target.position - transform.position;
-        if (offset.sqrMagnitude < attackDistance * attackDistance)
-        {
-            return true;
-        }
-        return false;
+        if(!target) { return false; }
+        return Vector3SqrMagnitudeLessThan
+            (
+                target.position,
+                transform.position,
+                attackDistance
+            );
+    }
+
+    private bool Vector3SqrMagnitudeLessThan(Vector3 vector1, Vector3 vector2, float distance)
+    {
+        return Vector3.SqrMagnitude(vector1 - vector2) < distance * distance;
     }
 }
 

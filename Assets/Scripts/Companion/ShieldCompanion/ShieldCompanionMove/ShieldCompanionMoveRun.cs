@@ -10,7 +10,11 @@ public class ShieldCompanionMoveRun : CompanionMove
 
     public override void Move()
     {
-        if (companion.CanAttackTarget())
+        if (!companion.CheckFarFromPlayer())
+        {
+            companion.ChangeTargetToPlayer();
+        }
+        else if (companion.CanAttackTarget())
         {
             companion.MoveStopToTarget();
             companion.CState = CompanionState.Attack;
@@ -18,6 +22,7 @@ public class ShieldCompanionMoveRun : CompanionMove
             return;
         }
         
+        companion.MoveStartToTarget();
         companion.MoveToTarget();
     }
 }

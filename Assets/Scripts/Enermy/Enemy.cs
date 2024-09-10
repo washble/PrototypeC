@@ -48,7 +48,7 @@ public abstract class Enemy : MonoBehaviour
         NavMeshInitSettings();
         SetDamage(damage);
 
-        //WeaponInitSettings();
+        // WeaponInitSettings();
     }
 
     protected virtual void Update()
@@ -113,12 +113,17 @@ public abstract class Enemy : MonoBehaviour
 
     internal bool CanAttackTarget()
     {
-        Vector3 offset = target.position - transform.position;
-        if (offset.sqrMagnitude < attackDistance * attackDistance)
-        {
-            return true;
-        }
-        return false;
+        return Vector3SqrMagnitudeLessThan
+            (
+                target.position,
+                transform.position,
+                attackDistance
+            );
+    }
+    
+    private bool Vector3SqrMagnitudeLessThan(Vector3 vector1, Vector3 vector2, float distance)
+    {
+        return Vector3.SqrMagnitude(vector1 - vector2) < distance * distance;
     }
 }
 
