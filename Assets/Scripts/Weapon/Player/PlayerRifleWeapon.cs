@@ -32,6 +32,6 @@ public class PlayerRifleWeapon : Weapon
 
     public override void AttackStop()
     {
-        curAttackState = AttackState.Idle;
+        CurAttackState = AttackState.Idle;
     }
 }

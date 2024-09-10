@@ -14,10 +14,10 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] private Vector3 offset;
     [SerializeField] private Vector3 rotation;
     
-    protected WeaponAttackTypeSO curWeaponAttackType;
+    protected WeaponAttackTypeSO CurWeaponAttackType;
 
     // ================ [Attack State] ================ // 
-    protected AttackState curAttackState { get; set; }
+    protected AttackState CurAttackState;
 
     private CancellationTokenSource cts = new CancellationTokenSource();
 
@@ -50,8 +50,8 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void AttackStart(int startDelayMilliSecond)
     {
-        if (curAttackState == AttackState.Attack) return;
-        curAttackState = AttackState.Attack;
+        if (CurAttackState == AttackState.Attack) return;
+        CurAttackState = AttackState.Attack;
         AttackChecking(startDelayMilliSecond).Forget();
     }
     
@@ -62,8 +62,8 @@ public abstract class Weapon : MonoBehaviour
         
         await UniTask.Delay(startDelayMilliSecond, cancellationToken: token);
         
-        WeaponAttackTypeSO.IAttackDetail[] attackDetails = curWeaponAttackType.attackDetails;
-        while (curAttackState == AttackState.Attack)
+        WeaponAttackTypeSO.IAttackDetail[] attackDetails = CurWeaponAttackType.attackDetails;
+        while (CurAttackState == AttackState.Attack)
         {
             for (int i = 0; i < attackDetails.Length; i++)
             {
@@ -81,7 +81,7 @@ public abstract class Weapon : MonoBehaviour
                         break;
                 }
             }
-            curAttackState = AttackState.Idle;
+            CurAttackState = AttackState.Idle;
         }
     }
 
@@ -89,14 +89,14 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void AttackStop()
     {
-        curAttackState = AttackState.Idle;
+        CurAttackState = AttackState.Idle;
     }
 
     public void ChangeCurWeaponAttackType(int num)
     {
         if (num < attackTypes.Length)
         {
-            curWeaponAttackType = attackTypes[num];
+            CurWeaponAttackType = attackTypes[num];
         }
     }
 }

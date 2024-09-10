@@ -20,6 +20,6 @@ public class PlayerSwordWeapon : Weapon
 
     public override void AttackStop()
     {
-        curAttackState = AttackState.Idle;
+        CurAttackState = AttackState.Idle;
     }
 }
