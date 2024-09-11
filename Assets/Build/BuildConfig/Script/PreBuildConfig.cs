@@ -5,6 +5,10 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
+#if UNITY_EDITOR
+using UnityEditor.Build.Reporting;
+#endif
+
 public class PreBuildConfig : ScriptableObject
 {
 #if UNITY_EDITOR
@@ -228,14 +232,32 @@ public class PreBuildConfig : ScriptableObject
             
             SetBuildOptions(ref BuildPlayerOptions, ref preBuildConfig.buildOptions);
             SetDevelopmentMode(preBuildConfig.buildMode);
-            
-            BuildPipeline.BuildPlayer(BuildPlayerOptions);
+
+            BuildAndReport(in BuildPlayerOptions);
+            //BuildPipeline.BuildPlayer(BuildPlayerOptions);
             //BuildPlayerWindow.DefaultBuildMethods.BuildPlayer(buildPlayerOptions);
         }
 
         private void BuildPlayerOptionsInit()
         {
             BuildPlayerOptions.options = BuildOptions.None;
+        }
+
+        private void BuildAndReport(in BuildPlayerOptions buildPlayerOptions)
+        {
+            BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
+            BuildSummary summary = report.summary;
+            
+            if (summary.result == BuildResult.Succeeded)
+            {
+                string buildFolderPath = EditorFunction.GetDirectoryName(summary.outputPath);
+                Application.OpenURL($"file://{buildFolderPath}");
+                Debug.Log($"<color=green>[Build Success]</color> The build has been completed. Folder Path: {buildFolderPath}");
+            }
+            else
+            {
+                Debug.LogError($"<color=red>[Build Failed]</color> Build failed: {summary.result}");
+            }
         }
     }
 
@@ -343,7 +365,7 @@ public class PreBuildConfig : ScriptableObject
     {
         BuildPlayerWindow.DefaultBuildMethods.BuildPlayer(options);
     }
-
+    
 #endif
 }
 
