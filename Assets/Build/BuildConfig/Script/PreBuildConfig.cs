@@ -347,7 +347,9 @@ public class PreBuildConfig : ScriptableObject
 
     private static void SetDevelopmentMode(BuildMode buildMode)
     {
-        EditorUserBuildSettings.development = buildMode != BuildMode.Release;
+        bool isBuildRelease = buildMode == BuildMode.Release;
+        EditorUserBuildSettings.development = !isBuildRelease;
+        EditorUserBuildSettings.allowDebugging = !isBuildRelease;
     }
 
     private static void SetBuildOptions(ref BuildPlayerOptions buildPlayerOptions, ref BuildOptionParts buildOptions)
