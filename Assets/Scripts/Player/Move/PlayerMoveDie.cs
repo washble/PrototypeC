@@ -13,6 +13,6 @@ public class PlayerMoveDie : IMove
     
     public void Move()
     {
-        
+        playerMoveController.playerState = PlayerState.Die;
     }
 }
