@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public class ShieldCompanion : Companion
 {
     internal CompanionMove moveIdle;

@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public class ShieldCompanionMoveAttack : CompanionMove
 {
     private ShieldCompanion companion;
@@ -10,10 +12,10 @@ public class ShieldCompanionMoveAttack : CompanionMove
 
     public override void Move()
     {
-        if (!companion.CanAttackTarget())
+        companion.CState = CompanionState.Attack;
+        if (companion.CheckFarFromPlayer(15))
         {
             companion.MoveStartToTarget();
-            companion.CState = CompanionState.Move;
             companion.ChangeCurMove(companion.moveRun);
             return;
         }

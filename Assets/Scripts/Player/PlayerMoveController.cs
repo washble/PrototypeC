@@ -8,7 +8,6 @@ public class PlayerMoveController : Singleton<PlayerMoveController>
 {
     private InputManager inputManager;
     private UIManager uiManager;
-    private EnemySpawner enemySpawner;
 
     internal PlayerWeaponController playerWeaponController;
     internal NavMeshAgent navMeshAgent;
@@ -37,7 +36,6 @@ public class PlayerMoveController : Singleton<PlayerMoveController>
         
         inputManager = InputManager.Instance;
         uiManager = UIManager.Instance;
-        enemySpawner = EnemySpawner.Instance;
 
         playerWeaponController = GetComponent<PlayerWeaponController>();
         navMeshAgent = GetComponent<NavMeshAgent>();

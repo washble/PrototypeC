@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -20,10 +19,6 @@ public abstract class Companion : MonoBehaviour
     [SerializeField] private float attackDistance = 5;
     [SerializeField] private float lookAtSpeed = 2f;
 
-    [FormerlySerializedAs("playerDistanceLimit")]
-    [Header("[Companion]")] 
-    [SerializeField] private float distanceLimitFromPlayer;
-    
     [Header("[Weapon]")]
     [SerializeField] private Weapon weapon;
     internal Weapon Cweapon => weapon;
@@ -126,15 +121,30 @@ public abstract class Companion : MonoBehaviour
     {
         target = GameManager.Instance.Player.transform;
     }
-
-    internal bool CheckFarFromPlayer()
+    
+    internal void ChangeAttackTarget(Transform target)
     {
-        return Vector3SqrMagnitudeLessThan
+        this.target = target;
+    }
+
+    internal bool CheckFarFromPlayer(float limitDistance)
+    {
+        return !Vector3SqrMagnitudeLessThan
             (
                 GameManager.Instance.Player.transform.position,
                 transform.position,
-                distanceLimitFromPlayer
+                limitDistance
             );
+    }
+
+    internal bool CheckFarFromTarget(Transform target, float limitDistance)
+    {
+        return !Vector3SqrMagnitudeLessThan
+        (
+            target.position,
+            transform.position,
+            limitDistance
+        );
     }
 
     internal bool CanAttackTarget()
