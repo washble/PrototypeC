@@ -33,7 +33,7 @@ public class ShieldCompanionMoveRun : CompanionMove
                 else
                 {
                     companion.MoveStopToTarget();
-                    companion.ChangeAttackTarget(raycastEnemyHits[0].transform);
+                    companion.ChangeAttackTarget(raycastEnemyHits[(int)(enemyHitCount * 0.5)].transform);
                     companion.ChangeCurMove(companion.moveAttack);    
                 }
                 return;
