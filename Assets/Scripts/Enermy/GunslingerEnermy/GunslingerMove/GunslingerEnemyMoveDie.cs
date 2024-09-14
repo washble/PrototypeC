@@ -16,6 +16,8 @@ public class GunslingerEnemyMoveDie : EnemyMove
 
     private void Die()
     {
+        enemy.EState = EnemyState.Die;
+        
         // Temp Setting
         enemy.gameObject.SetActive(false);
     }

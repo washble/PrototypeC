@@ -11,10 +11,11 @@ public class GunslingerEnemyMoveAttack : EnemyMove
     
     public override void Move()
     {
+        enemy.EState = EnemyState.Attack;
+        
         if (!enemy.CanAttackTarget())
         {
             enemy.MoveStartToTarget();
-            enemy.EState = EnemyState.Move;
             enemy.ChangeCurMove(enemy.moveRun);
             return;
         }

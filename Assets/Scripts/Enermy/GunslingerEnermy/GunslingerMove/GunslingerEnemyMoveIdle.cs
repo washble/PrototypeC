@@ -11,8 +11,9 @@ public class GunslingerEnemyMoveIdle : EnemyMove
     
     public override void Move()
     {
+        enemy.EState = EnemyState.Idle;
+        
         enemy.MoveStartToTarget();
-        enemy.EState = EnemyState.Move;
         enemy.ChangeCurMove(enemy.moveRun);
     }
 }
