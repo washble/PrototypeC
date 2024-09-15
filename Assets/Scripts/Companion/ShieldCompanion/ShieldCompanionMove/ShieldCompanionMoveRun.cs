@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class ShieldCompanionMoveRun : CompanionMove
@@ -18,7 +17,7 @@ public class ShieldCompanionMoveRun : CompanionMove
         {
             companion.ChangeTargetToPlayer();
             companion.MoveStartToTarget();
-            companion.MoveToTarget();
+            companion.MoveToTarget(6);
         }
         else
         {

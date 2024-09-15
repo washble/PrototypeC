@@ -76,19 +76,25 @@ public abstract class Companion : MonoBehaviour
         weapon.SetWeaponGrabPosition(default, default, default);
     }
     
-    internal virtual void MoveStartToTarget()
+    internal void MoveStartToTarget()
     {
         navMeshAgent.isStopped = false;
     }
 
-    internal virtual void MoveStopToTarget()
+    internal void MoveStopToTarget()
     {
         navMeshAgent.isStopped = true;
         navMeshAgent.velocity = Vector3.zero;
     }
     
-    internal virtual void MoveToTarget()
+    internal void MoveToTarget()
     {
+        navMeshAgent.SetDestination(target.position);
+    }
+    
+    internal void MoveToTarget(float addSpeed)
+    {
+        navMeshAgent.speed = speed + addSpeed;
         navMeshAgent.SetDestination(target.position);
     }
     
