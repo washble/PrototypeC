@@ -3,6 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public abstract class Weapon : MonoBehaviour
 {
     [Header("[Attack]")]

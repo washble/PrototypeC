@@ -39,4 +39,5 @@ public enum WeaponType
     PlayerRifleBullet,
     GunslingerBullet,
     CompanionShield,
+    CompanionSword,
 }
