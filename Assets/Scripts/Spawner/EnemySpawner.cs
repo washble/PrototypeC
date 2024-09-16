@@ -6,6 +6,6 @@ using UnityEngine;
 public class EnemySpawner : Singleton<EnemySpawner>
 {
     // Temp Simple Settings
-    [SerializeField] private Enemy[] enemieses;
-    public Enemy[] Enemies => enemieses;
+    [SerializeField] private Enemy[] enemies;
+    public Enemy[] Enemies => enemies;
 }
