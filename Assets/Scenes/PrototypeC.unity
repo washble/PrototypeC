@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.5644509, g: 0.6346435, b: 0.7209323, a: 1}
+  m_IndirectSpecularColor: {r: 0.5651617, g: 0.63572097, b: 0.7219672, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -746,7 +746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b8342d2cf22c5419b545d1d58eda7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemieses:
+  enemies:
   - {fileID: 1315725978}
   - {fileID: 838102646}
   - {fileID: 86560005}
@@ -2730,7 +2730,7 @@ RotationConstraint:
   m_Enabled: 1
   m_Weight: 0.5
   m_RotationAtRest: {x: 0.08951778, y: 133.42139, z: -0.6263446}
-  m_RotationOffset: {x: -46.36013, y: 0.420133, z: 91.314514}
+  m_RotationOffset: {x: -46.360138, y: 0.420133, z: 91.314514}
   m_AffectRotationX: 1
   m_AffectRotationY: 1
   m_AffectRotationZ: 1
