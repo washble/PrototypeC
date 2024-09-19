@@ -79,6 +79,7 @@ public class PreBuildConfig : ScriptableObject
         
         private void ShowBuildComponent(ref SerializedProperty serializedProperty)
         {
+            if (!preBuildConfig.useBuildConfigComponents) { return; }
             if (serializedProperty.arraySize > 0)
             {
                 for (int i = 0; i < serializedProperty.arraySize; i++)
@@ -208,6 +209,8 @@ public class PreBuildConfig : ScriptableObject
 
         private void AllBuildConfigComponentsApply()
         {
+            if (!preBuildConfig.useBuildConfigComponents) { return; }
+            
             PreBuildConfigComponent[] components = preBuildConfig.buildConfigComponents;
             for (int i = 0; i < components.Length; i++)
             {
