@@ -29,8 +29,8 @@ public enum GameObjectLayer
 public enum GameObjectTag
 {
     Player,
-    EGunslinger,
-    CShielder
+    Gunslinger,
+    Shielder
 }
 
 public enum WeaponType

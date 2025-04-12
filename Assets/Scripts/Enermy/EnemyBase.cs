@@ -89,7 +89,7 @@ public abstract class EnemyBase : MonoBehaviour
     
     protected void SetDamage(float setDamage)
     {
-        EnemyManager.Instance.enemyDamage[GameObjectTag.EGunslinger] = setDamage;
+        EnemyManager.Instance.enemyDamage[GameObjectTag.Gunslinger] = setDamage;
     }
 
     internal virtual float Damaged(float damaged)
