@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26baa328682f0bb459930510571caab8, type: 3}
+  m_Name: PreBuildConfig
+  m_EditorClassIdentifier: 
+  selectedBuildConfigIndex: 0
+  buildConfigs:
+  - configName: None
+    generalBuildSettings:
+      productName: Clearing Blade
+      companyName: DevDepot
+      version: 0.1
+  buildMode: 1
+  buildOptions: 128
+  useBuildConfigComponents: 1
+  buildConfigComponents:
+  - {fileID: 11400000, guid: 47580cfecc0edbe4ca15e276889b4257, type: 2}
+  - {fileID: 11400000, guid: d61af1a75b487bb4182c1e05a3441f38, type: 2}
+  - {fileID: 11400000, guid: 68724e25b7d38004cb1c386808a5acac, type: 2}
+  - {fileID: 11400000, guid: f582fdaa8f2fd6e4b90421deeae68c99, type: 2}
