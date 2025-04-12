@@ -10,8 +10,16 @@ public class PlayerMoveController : PlayerBase
     internal PlayerState playerState = PlayerState.Idle;
 
     [Header("[Move]")]
+    [SerializeField] internal MoveType moveType;
     [SerializeField] internal float lookAtSpeed = 15f;
-
+    [SerializeField] internal float addRunSpeed = 5f;
+    
+    internal enum MoveType
+    {
+        Absolute,
+        Relative,
+    }
+    
     private IMove curMove;
     private IMove moveIdle;
     private IMove moveRun;
