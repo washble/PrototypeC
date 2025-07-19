@@ -1,15 +1,13 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerMoveRun : IMove
+public class PlayerMoveWalk : IMove
 {
     private readonly PlayerMoveController playerMoveController;
     private readonly PlayerAnimationController playerAnimationController;
     private readonly NavMeshAgent navMeshAgent;
 
-    private bool isSpeedRunning = false;
-
-    public PlayerMoveRun(PlayerMoveController playerMoveController)
+    public PlayerMoveWalk(PlayerMoveController playerMoveController)
     {
         this.playerMoveController = playerMoveController;
         playerAnimationController = PlayerAnimationController.Instance;
@@ -20,7 +18,10 @@ public class PlayerMoveRun : IMove
     
     public void Move()
     {
-        playerMoveController.playerState = PlayerState.Run;
+        if (playerMoveController.playerState != PlayerState.Run)
+        {
+            playerMoveController.playerState = PlayerState.Walk;
+        }
     
         Vector3 direction = playerMoveController.direction;
         (Vector3 scaledMovement, Quaternion targetRotation) = ScaleMovement(direction, playerMoveController.moveType);
@@ -70,22 +71,6 @@ public class PlayerMoveRun : IMove
             direction.y < 0 ? -scaledMovement : scaledMovement, Vector3.up);
         
         return (scaledMovement, targetRotation);
-    }
-
-    public void StartSpeedRunning()
-    {
-        if(isSpeedRunning) { return; }
-
-        isSpeedRunning = true;
-        navMeshAgent.speed += playerMoveController.addRunSpeed;
-    }
-
-    public void StopSpeedRunning()
-    {
-        if(!isSpeedRunning) { return; }
-
-        isSpeedRunning = false;
-        navMeshAgent.speed -= playerMoveController.addRunSpeed;
     }
 
     private void MoveAnimation()

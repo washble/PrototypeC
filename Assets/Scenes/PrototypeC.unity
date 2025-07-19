@@ -637,12 +637,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 184984750}
+  - component: {fileID: 184984753}
   - component: {fileID: 184984751}
   - component: {fileID: 184984747}
   - component: {fileID: 184984752}
   - component: {fileID: 184984755}
   - component: {fileID: 184984754}
-  - component: {fileID: 184984753}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -711,6 +711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveType: 0
   lookAtSpeed: 15
+  baseSpeed: 10
   addRunSpeed: 5
   isDebug: 0
   attackRadiusColor: {r: 1, g: 0, b: 0, a: 0.5}

@@ -12,7 +12,10 @@ public class PlayerMoveController : PlayerBase
     [Header("[Move]")]
     [SerializeField] internal MoveType moveType;
     [SerializeField] internal float lookAtSpeed = 15f;
+    [SerializeField] internal float baseSpeed = 10f;
     [SerializeField] internal float addRunSpeed = 5f;
+    
+    private bool moveHold = false;
     
     internal enum MoveType
     {
@@ -22,7 +25,7 @@ public class PlayerMoveController : PlayerBase
     
     private IMove curMove;
     private IMove moveIdle;
-    private IMove moveRun;
+    private IMove moveWalk;
     private IMove moveAttack;
     private IMove moveDie;
 
@@ -56,7 +59,7 @@ public class PlayerMoveController : PlayerBase
     private void MoveSettings()
     {
         moveIdle = new PlayerMoveIdle(this);
-        moveRun = new PlayerMoveRun(this);
+        moveWalk = new PlayerMoveWalk(this);
         moveAttack = new PlayerMoveAttack(this);
         moveDie = new PlayerMoveDie(this);
 
@@ -66,20 +69,27 @@ public class PlayerMoveController : PlayerBase
     private void StateInit()
     {
         direction = Vector2.zero;
-        (moveRun as PlayerMoveRun)!.StopSpeedRunning();
+        navMeshAgent.speed = baseSpeed;
         
         curMove = moveIdle;
     }
     
     private void Update()
     {
+        if(moveHold) { return; }
+        
         curMove.Move();
+    }
+    
+    internal void MoveHold(bool value)
+    {
+        moveHold = value;
     }
     
     private void InputMovePerformed(Vector2 position, float time)
     {
         direction = position;
-        curMove = moveRun;
+        curMove = moveWalk;
     }
     
     private void InputMoveCanceled(Vector2 position, float time)
@@ -91,7 +101,7 @@ public class PlayerMoveController : PlayerBase
     {
         if(run < 1) { return; }
 
-        (moveRun as PlayerMoveRun)!.StartSpeedRunning();
+        Run();
     }
 
 
@@ -100,6 +110,14 @@ public class PlayerMoveController : PlayerBase
         if(attack < 1) { return; }
         
         curMove = moveAttack;
+    }
+    
+    private void Run()
+    {
+        if(playerState == PlayerState.Run) { return; }
+        
+        playerState = PlayerState.Run;
+        navMeshAgent.speed += addRunSpeed;
     }
 
     internal void AttackEnd()
@@ -122,6 +140,7 @@ public class PlayerMoveController : PlayerBase
 public enum PlayerState
 {
     Idle,
+    Walk,
     Run,
     Dash,
     Attack,
