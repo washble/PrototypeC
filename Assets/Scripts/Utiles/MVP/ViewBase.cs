@@ -23,7 +23,6 @@ public abstract class ViewBase<P> : MonoBehaviour where P : class
     /// Method to create the Presenter and Model.
     /// 
     /// Example usage:
-    /// 
     /// Presenter = new Presenter(this);
     /// 
     /// This method should be implemented by classes that implement IView.
