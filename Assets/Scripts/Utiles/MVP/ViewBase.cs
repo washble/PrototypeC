@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// class interface.
 /// </summary>
-public abstract class ViewBase<P, M> : MonoBehaviour where P : class where M : class
+public abstract class ViewBase<P> : MonoBehaviour where P : class
 {
     /// <summary>
     /// Gets the associated Presenter.
@@ -11,17 +11,12 @@ public abstract class ViewBase<P, M> : MonoBehaviour where P : class where M : c
     protected P Presenter { get; set; }
     
     /// <summary>
-    /// Gets the associated Model.
-    /// </summary>
-    protected M Model { get; set; }
-
-    /// <summary>
     /// MonoBehaviour's Awake method.
     /// Initializes the View by creating the Presenter and Model.
     /// </summary>
     protected virtual void Awake()
     {
-        CreatePresenterAndModel();
+        CreatePresenter();
     }
 
     /// <summary>
@@ -29,10 +24,9 @@ public abstract class ViewBase<P, M> : MonoBehaviour where P : class where M : c
     /// 
     /// Example usage:
     /// 
-    /// Model = new Model();
-    /// Presenter = new Presenter(this, Model);
+    /// Presenter = new Presenter(this);
     /// 
     /// This method should be implemented by classes that implement IView.
     /// </summary>
-    protected abstract void CreatePresenterAndModel();
+    protected abstract void CreatePresenter();
 }
