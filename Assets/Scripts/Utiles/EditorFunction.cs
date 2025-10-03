@@ -224,6 +224,18 @@ public static class EditorFunction
     {
         EditorSceneManager.MarkSceneDirty(scene);
     }
+
+    public static void SaveAsset(Object target)
+    {
+        EditorUtility.SetDirty(target);
+        EditorApplication.delayCall += SaveAssetDelayed;
+    }
+    
+    private static void SaveAssetDelayed()
+    {
+        EditorApplication.delayCall -= SaveAssetDelayed;
+        AssetDatabase.SaveAssets();
+    }
     
 #endif
 }
