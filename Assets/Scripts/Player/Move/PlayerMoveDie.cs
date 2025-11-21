@@ -1,17 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PlayerMoveDie : IMove
+public class PlayerMoveDie : PlayerMove
 {
-    private readonly PlayerMoveController playerMoveController;
-
-    public PlayerMoveDie(PlayerMoveController playerMoveController)
+    public PlayerMoveDie(PlayerMoveController playerMoveController) : base(playerMoveController)
     {
-        this.playerMoveController = playerMoveController;
+        
     }
     
-    public void Move()
+    public override void Move()
     {
         playerMoveController.playerState = PlayerState.Die;
     }

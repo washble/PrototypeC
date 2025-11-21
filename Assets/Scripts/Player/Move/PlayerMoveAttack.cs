@@ -1,12 +1,8 @@
 using UnityEngine;
-using UnityEngine.AI;
 
-public class PlayerMoveAttack : IMove
+public class PlayerMoveAttack : PlayerMove
 {
-    private readonly PlayerMoveController playerMoveController;
-    private readonly PlayerAnimationController playerAnimationController;
     private readonly PlayerWeaponController playerWeaponController;
-    private readonly NavMeshAgent navMeshAgent;
 
     private readonly Transform thisTransform;
     private Transform selectTargetTransform;
@@ -14,17 +10,14 @@ public class PlayerMoveAttack : IMove
     // Calibrate according to the animation
     private readonly Quaternion calibrateAttackQuaternion = Quaternion.Euler(0, 45,  0);
 
-    public PlayerMoveAttack(PlayerMoveController playerMoveController)
+    public PlayerMoveAttack(PlayerMoveController playerMoveController) : base(playerMoveController)
     {
-        this.playerMoveController = playerMoveController;
-        playerAnimationController = PlayerAnimationController.Instance;
         playerWeaponController = playerMoveController.playerWeaponController;
 
         thisTransform = playerMoveController.transform;
-        navMeshAgent = playerMoveController.navMeshAgent;
     }
     
-    public void Move()
+    public override void Move()
     {
         playerMoveController.playerState = PlayerState.Attack;
         MoveAnimation();

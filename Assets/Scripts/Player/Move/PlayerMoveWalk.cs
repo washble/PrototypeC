@@ -1,22 +1,13 @@
 using UnityEngine;
-using UnityEngine.AI;
 
-public class PlayerMoveWalk : IMove
+public class PlayerMoveWalk : PlayerMove
 {
-    private readonly PlayerMoveController playerMoveController;
-    private readonly PlayerAnimationController playerAnimationController;
-    private readonly NavMeshAgent navMeshAgent;
-
-    public PlayerMoveWalk(PlayerMoveController playerMoveController)
+    public PlayerMoveWalk(PlayerMoveController playerMoveController) : base(playerMoveController)
     {
-        this.playerMoveController = playerMoveController;
-        playerAnimationController = PlayerAnimationController.Instance;
-        
-        navMeshAgent = playerMoveController.navMeshAgent;
         navMeshAgent.updateRotation = false;
     }
     
-    public void Move()
+    public override void Move()
     {
         if (playerMoveController.playerState != PlayerState.Run)
         {

@@ -1,17 +1,11 @@
-
-
-public class PlayerMoveIdle : IMove
+public class PlayerMoveIdle : PlayerMove
 {
-    private readonly PlayerMoveController playerMoveController;
-    private readonly PlayerAnimationController playerAnimationController;
-
-    public PlayerMoveIdle(PlayerMoveController playerMoveController)
+    public PlayerMoveIdle(PlayerMoveController playerMoveController) : base(playerMoveController)
     {
-        this.playerMoveController = playerMoveController;
-        playerAnimationController = PlayerAnimationController.Instance;
+        
     }
     
-    public void Move()
+    public override void Move()
     {
         playerMoveController.playerState = PlayerState.Idle;
         
