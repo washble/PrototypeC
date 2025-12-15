@@ -7,8 +7,6 @@ public class PlayerMoveController : PlayerBase
 {
     internal Vector2 direction = Vector2.zero;
 
-    internal PlayerState playerState = PlayerState.Idle;
-
     [Header("[Move]")]
     [SerializeField] internal MoveType moveType;
     [SerializeField] internal float lookAtSpeed = 15f;
@@ -16,6 +14,7 @@ public class PlayerMoveController : PlayerBase
     [SerializeField] internal float addRunSpeed = 5f;
     
     private bool moveHold = false;
+    internal bool isRunning = false;
     
     internal enum MoveType
     {
@@ -70,8 +69,17 @@ public class PlayerMoveController : PlayerBase
     {
         direction = Vector2.zero;
         navMeshAgent.speed = baseSpeed;
+
+        ChangeState(moveIdle);
+    }
+    
+    private void ChangeState(IMove newState)
+    {
+        if(curMove == newState) { return; }
         
-        curMove = moveIdle;
+        curMove?.OnExit();
+        curMove = newState;
+        curMove.OnEnter();
     }
     
     private void Update()
@@ -89,7 +97,8 @@ public class PlayerMoveController : PlayerBase
     private void InputMovePerformed(Vector2 position, float time)
     {
         direction = position;
-        curMove = moveWalk;
+        
+        ChangeState(moveWalk);
     }
     
     private void InputMoveCanceled(Vector2 position, float time)
@@ -108,15 +117,15 @@ public class PlayerMoveController : PlayerBase
     private void InputAttackPerformed(float attack, float time)
     {
         if(attack < 1) { return; }
-        
-        curMove = moveAttack;
+
+        ChangeState(moveAttack);
     }
     
     private void Run()
     {
-        if(playerState == PlayerState.Run) { return; }
+        if(isRunning) { return; }
         
-        playerState = PlayerState.Run;
+        isRunning = true;
         navMeshAgent.speed += addRunSpeed;
     }
 
@@ -135,14 +144,4 @@ public class PlayerMoveController : PlayerBase
         Gizmos.DrawSphere(transform.position, playerWeaponController.attackDistance);
     }
 #endif
-}
-
-public enum PlayerState
-{
-    Idle,
-    Walk,
-    Run,
-    Dash,
-    Attack,
-    Die,
 }

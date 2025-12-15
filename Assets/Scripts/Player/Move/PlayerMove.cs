@@ -13,6 +13,8 @@ public abstract class PlayerMove : IMove
 
         navMeshAgent = playerMoveController.navMeshAgent;
     }
-    
+
+    public abstract void OnEnter();
     public abstract void Move();
+    public abstract void OnExit();
 }

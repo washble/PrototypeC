@@ -16,14 +16,17 @@ public class PlayerMoveAttack : PlayerMove
 
         thisTransform = playerMoveController.transform;
     }
-    
+
+    public override void OnEnter() { }
+
     public override void Move()
     {
-        playerMoveController.playerState = PlayerState.Attack;
         MoveAnimation();
         playerWeaponController.WeaponBase.AttackStart(0);
         playerMoveController.AttackEnd();
     }
+
+    public override void OnExit() { }
 
     private void LookAtTarget(Transform targetTransform)
     {

@@ -6,14 +6,14 @@ public class PlayerMoveWalk : PlayerMove
     {
         navMeshAgent.updateRotation = false;
     }
-    
+
+    public override void OnEnter()
+    {
+        
+    }
+
     public override void Move()
     {
-        if (playerMoveController.playerState != PlayerState.Run)
-        {
-            playerMoveController.playerState = PlayerState.Walk;
-        }
-    
         Vector3 direction = playerMoveController.direction;
         (Vector3 scaledMovement, Quaternion targetRotation) = ScaleMovement(direction, playerMoveController.moveType);
         
@@ -27,6 +27,11 @@ public class PlayerMoveWalk : PlayerMove
         navMeshAgent.Move(scaledMovement);
     
         MoveAnimation();
+    }
+
+    public override void OnExit()
+    {
+        playerMoveController.isRunning = false;
     }
 
     private (Vector3, Quaternion) ScaleMovement(Vector3 direction, PlayerMoveController.MoveType moveType)

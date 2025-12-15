@@ -4,9 +4,13 @@ public class PlayerMoveDie : PlayerMove
     {
         
     }
-    
+
+    public override void OnEnter() { }
+
     public override void Move()
     {
-        playerMoveController.playerState = PlayerState.Die;
+        
     }
+
+    public override void OnExit() { }
 }
