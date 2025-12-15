@@ -761,7 +761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4d109f56bfe44458f2797011bb38bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponBase: {fileID: 386302858}
+  weaponBase: {fileID: 2123287597}
   shield: 5
   damage: 5
   attackDistance: 10
@@ -1018,7 +1018,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &386302854
 Transform:
   m_ObjectHideFlags: 0
@@ -5062,7 +5062,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2123287594
 Transform:
   m_ObjectHideFlags: 0
@@ -5141,7 +5141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 245fd741b042fce4699e18e74e224d6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponType: 0
+  weaponType: 1
   attackTypes:
   - {fileID: 11400000, guid: cbe4123a8f4b13844aa67929b71d0c03, type: 2}
   weaponGrabTransform: {fileID: 8600529817463599632}
