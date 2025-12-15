@@ -4,12 +4,12 @@ public class GunslingerEnemy : EnemyBase
 {
     [SerializeField] private Transform weaponGrabTransform;
     
-    internal EnemyMove moveIdle;
-    internal EnemyMove moveRun;
-    internal EnemyMove moveDash;
-    internal EnemyMove moveAttack;
-    internal EnemyMove moveDamaged;
-    internal EnemyMove moveDie;
+    private IMove moveIdle;
+    private IMove moveRun;
+    private IMove moveDash;
+    private IMove moveAttack;
+    private IMove moveDamaged;
+    private IMove moveDie;
 
     protected override void Start()
     {
@@ -27,17 +27,31 @@ public class GunslingerEnemy : EnemyBase
         moveDamaged = new GunslingerEnemyMoveDamaged(this);
         moveDie = new GunslingerEnemyMoveDie(this);
 
-        ChangeCurMove(moveIdle);
+        ChangeState(moveIdle);
+    }
+    
+    private void ChangeState(IMove newState)
+    {
+        if(curMove == newState) { return; }
+        
+        curMove?.OnExit();
+        curMove = newState;
+        curMove.OnEnter();
     }
 
-    internal void ChangeCurMove(EnemyMove move)
+    internal void ChangeRun()
     {
-        CurMove = move;
+        ChangeState(moveRun);
+    }
+    
+    internal void ChangeAttack()
+    {
+        ChangeState(moveAttack);
     }
 
     internal void DamagedEnd(float health)
     {
-        CurMove = health > 0 ? moveIdle : moveDie;
+        ChangeState(health > 0 ? moveIdle : moveDie);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -48,7 +62,7 @@ public class GunslingerEnemy : EnemyBase
             case (int)GameObjectLayer.Weapon:
                 if (otherGameObject.CompareTag(GameObjectTag.Player.ToString()))
                 {
-                    CurMove = moveDamaged;
+                    ChangeState(moveDamaged);
                 }
                 break;
         }

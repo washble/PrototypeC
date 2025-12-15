@@ -23,7 +23,7 @@ public abstract class EnemyBase : MonoBehaviour
     internal WeaponBase Eweapon => weaponBase;
 
     // =========== Component =========== //
-    protected EnemyMove CurMove;
+    protected IMove curMove;
     
     private Transform target;
     protected Transform ETarget => target;
@@ -34,8 +34,6 @@ public abstract class EnemyBase : MonoBehaviour
     private NavMeshAgent navMeshAgent;
     protected NavMeshAgent ENavMeshAgent => navMeshAgent;
 
-    internal EnemyState EState;
-    
     protected virtual void Awake()
     {
         target = GameManager.Instance.Player.transform;
@@ -54,7 +52,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        CurMove.Move();
+        curMove.Move();
     }
 
     private void NavMeshInitSettings()
@@ -126,12 +124,4 @@ public abstract class EnemyBase : MonoBehaviour
     {
         return Vector3.SqrMagnitude(vector1 - vector2) < distance * distance;
     }
-}
-
-public enum EnemyState
-{
-    Idle,
-    Attack,
-    Move,
-    Die,
 }

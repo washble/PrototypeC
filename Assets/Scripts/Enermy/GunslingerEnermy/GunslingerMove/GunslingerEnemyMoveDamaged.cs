@@ -1,13 +1,13 @@
-
-
 public class GunslingerEnemyMoveDamaged : EnemyMove
 {
     private GunslingerEnemy enemy;
     
     public GunslingerEnemyMoveDamaged(EnemyBase enemyBase) : base(enemyBase)
     {
-        this.enemy = enemyBase as GunslingerEnemy;
+        enemy = enemyBase as GunslingerEnemy;
     }
+
+    public override void OnEnter() { }
 
     public override void Move()
     {
@@ -16,4 +16,6 @@ public class GunslingerEnemyMoveDamaged : EnemyMove
 
         enemy.DamagedEnd(remainHealth);
     }
+
+    public override void OnExit() { }
 }
