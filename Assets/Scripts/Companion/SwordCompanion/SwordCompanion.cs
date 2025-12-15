@@ -1,12 +1,10 @@
-
-
 public class SwordCompanion : CompanionBase
 {
-    internal CompanionMove moveIdle;
-    internal CompanionMove moveRun;
-    internal CompanionMove moveAttack;
-    internal CompanionMove moveDamaged;
-    internal CompanionMove moveDie;
+    private IMove moveIdle;
+    private IMove moveRun;
+    private IMove moveAttack;
+    private IMove moveDamaged;
+    private IMove moveDie;
     
     protected override void Start()
     {
@@ -21,16 +19,30 @@ public class SwordCompanion : CompanionBase
         moveRun = new SwordCompanionMoveRun(this);
         moveAttack = new SwordCompanionMoveAttack(this);
 
-        InitState();
+        ChangeState(moveIdle);
     }
 
-    private void InitState()
+    private void ChangeState(IMove newState)
     {
-        CurMove = moveIdle;
+        if(curMove == newState) { return; }
+        
+        curMove?.OnExit();
+        curMove = newState;
+        curMove.OnEnter();
     }
 
-    internal void ChangeCurMove(CompanionMove move)
+    internal void ChangeIdle()
     {
-        CurMove = move;
+        ChangeState(moveIdle);
+    }
+
+    internal void ChangeRun()
+    {
+        ChangeState(moveRun);
+    }
+    
+    internal void ChangeAttack()
+    {
+        ChangeState(moveAttack);
     }
 }

@@ -1,17 +1,18 @@
-
-
 public class ShieldCompanionMoveIdle : CompanionMove
 {
     private ShieldCompanion companion;
     
     public ShieldCompanionMoveIdle(CompanionBase companionBase) : base(companionBase)
     {
-        this.companion = companionBase as ShieldCompanion;
+        companion = companionBase as ShieldCompanion;
     }
+
+    public override void OnEnter() { }
 
     public override void Move()
     {
-        companion.CState = CompanionState.Idle;
-        companion.ChangeCurMove(companion.moveRun);
+        companion.ChangeRun();
     }
+
+    public override void OnExit() { }
 }

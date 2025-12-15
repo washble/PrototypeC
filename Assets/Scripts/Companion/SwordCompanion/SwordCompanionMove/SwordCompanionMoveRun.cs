@@ -6,13 +6,13 @@ public class SwordCompanionMoveRun : CompanionMove
     
     public SwordCompanionMoveRun(CompanionBase companionBase) : base(companionBase)
     {
-        this.companion = companionBase as SwordCompanion;
+        companion = companionBase as SwordCompanion;
     }
+
+    public override void OnEnter() { }
 
     public override void Move()
     {
-        companion.CState = CompanionState.Move;
-        
         if (companion.CheckFarFromPlayer(10))
         {
             companion.ChangeTargetToPlayer();
@@ -33,12 +33,14 @@ public class SwordCompanionMoveRun : CompanionMove
                 {
                     companion.MoveStopToTarget();
                     companion.ChangeAttackTarget(raycastEnemyHits[(int)(enemyHitCount * 0.5)].transform);
-                    companion.ChangeCurMove(companion.moveAttack);    
+                    companion.ChangeAttack();    
                 }
                 return;
             }
             companion.MoveStopToTarget();
-            companion.ChangeCurMove(companion.moveIdle);
+            companion.ChangeIdle();
         }
     }
+
+    public override void OnExit() { }
 }

@@ -1,12 +1,10 @@
-
-
 public class ShieldCompanion : CompanionBase
 {
-    internal CompanionMove moveIdle;
-    internal CompanionMove moveRun;
-    internal CompanionMove moveAttack;
-    internal CompanionMove moveDamaged;
-    internal CompanionMove moveDie;
+    private IMove moveIdle;
+    private IMove moveRun;
+    private IMove moveAttack;
+    private IMove moveDamaged;
+    private IMove moveDie;
     
     protected override void Start()
     {
@@ -21,16 +19,30 @@ public class ShieldCompanion : CompanionBase
         moveRun = new ShieldCompanionMoveRun(this);
         moveAttack = new ShieldCompanionMoveAttack(this);
 
-        InitState();
+        ChangeState(moveIdle);
+    }
+    
+    private void ChangeState(IMove newState)
+    {
+        if(curMove == newState) { return; }
+        
+        curMove?.OnExit();
+        curMove = newState;
+        curMove.OnEnter();
     }
 
-    private void InitState()
+    internal void ChangeIdle()
     {
-        CurMove = moveIdle;
+        ChangeState(moveIdle);
     }
-
-    internal void ChangeCurMove(CompanionMove move)
+    
+    internal void ChangeRun()
     {
-        CurMove = move;
+        ChangeState(moveRun);
+    }
+    
+    internal void ChangeAttack()
+    {
+        ChangeState(moveAttack);
     }
 }

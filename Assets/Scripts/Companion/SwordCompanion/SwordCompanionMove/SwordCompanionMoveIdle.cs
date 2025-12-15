@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class SwordCompanionMoveIdle : CompanionMove
 {
     private SwordCompanion companion;
@@ -11,9 +7,12 @@ public class SwordCompanionMoveIdle : CompanionMove
         this.companion = companionBase as SwordCompanion;
     }
 
+    public override void OnEnter() { }
+
     public override void Move()
     {
-        companion.CState = CompanionState.Idle;
-        companion.ChangeCurMove(companion.moveRun);
+        companion.ChangeRun();
     }
+
+    public override void OnExit() { }
 }
